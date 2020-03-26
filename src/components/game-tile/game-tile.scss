@@ -1,0 +1,25 @@
+@import "../../variables.scss";
+.game-tile-wrapper {
+  transition: all 0.25s;
+  box-shadow: $app-box-shadow;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    transform: scale(1.01);
+    box-shadow: $app-hover-box-shadow;
+  }
+  .game-tile {
+    display: flex;
+    flex-direction: column;
+    .game-title {
+      padding: 8px;
+    }
+    .game-winner {
+      padding: 8px;
+    }
+  }
+}
