@@ -11,6 +11,7 @@ import BoardHalf from "./components/board-position-line/board-half";
 import { DragDropContext } from "react-virtualized-dnd";
 import GameTile from "./components/game-tile/game-tile";
 import EndZone from "./components/end-zone/end-zone";
+import DiceImg from "./assets/dice.svg";
 
 function App() {
   document.title = "WebGammon";
@@ -43,7 +44,6 @@ function App() {
     } else {
       // Remove used dice
       const indexToRemove = dieRoll.findIndex(roll => roll === distanceMoved);
-      console.log("Removing roll at idx " + indexToRemove);
       const newDieRoll = [...dieRoll];
       newDieRoll.splice(indexToRemove, 1);
       setDieRoll(newDieRoll);
@@ -140,26 +140,29 @@ function App() {
               >
                 {"<- "}Back
               </button>
-              <div className={"cur-player-header " + curPlayer}>
-                Current Player: {curPlayer}
-              </div>
-              {dieRoll.length > 0 && (
-                <div className={"num-moves"}>
-                  Current Player Moves Left: {dieRoll.length}
+              <div className={"game-controls-and-info"}>
+                <div className={"cur-player-header " + curPlayer}>
+                  Current Player: {curPlayer}
                 </div>
-              )}
-              <div className={"dice-section"}>
-                <button
-                  tabIndex="0"
-                  onClick={rollDie}
-                  className={"roll-dice-btn"}
-                >
-                  Roll Dice
-                </button>
+                <div className={"dice-section"}>
+                  <button
+                    tabIndex="0"
+                    onClick={rollDie}
+                    className={"roll-dice-btn"}
+                  >
+                    <img src={DiceImg} className={"dice-icon"} />
+                    <span className={"roll-dice-text"}>Roll Dice</span>
+                  </button>
+                  {dieRoll.length > 0 && (
+                    <div className={"die-roll-info"}>
+                      Die Roll: (
+                      {dieRoll.map((die, idx) => (idx > 0 ? ", " + die : die))})
+                    </div>
+                  )}
+                </div>
                 {dieRoll.length > 0 && (
-                  <div className={"die-roll-info"}>
-                    Die Roll: (
-                    {dieRoll.map((die, idx) => (idx > 0 ? ", " + die : die))})
+                  <div className={"num-moves"}>
+                    Current Player Moves Left: {dieRoll.length}
                   </div>
                 )}
               </div>

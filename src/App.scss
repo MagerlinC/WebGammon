@@ -21,7 +21,7 @@
 .cur-player-header {
   text-align: left;
   padding: 8px;
-  margin-bottom: 8px;
+  margin-right: 18px;
   width: 200px;
   background-color: white;
   color: black;
@@ -61,12 +61,32 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 8px;
+    .game-controls-and-info {
+      display: flex;
+      flex-direction: row;
+    }
     .dice-section {
       display: flex;
       flex-direction: row;
-      .roll-dice-btn {
-        margin-right: 18px;
+      margin-right: 18px;
+
+      .die-roll-info {
+        padding: 8px;
       }
+      .roll-dice-btn {
+        display: flex;
+        flex-direction: row;
+        margin-right: 18px;
+        .dice-icon {
+          width: 24px;
+        }
+        .roll-dice-text {
+          padding: 8px;
+        }
+      }
+    }
+    .num-moves {
+      padding: 8px;
     }
   }
 
