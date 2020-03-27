@@ -1,0 +1,130 @@
+@import "./variables.scss";
+.App {
+  text-align: center;
+  font-family: "Raleway";
+}
+
+.App-header {
+  padding: 8px;
+  font-size: 24px;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  .header-text {
+    flex-grow: 1;
+  }
+  .new-game-btn {
+    flex-grow: 0;
+  }
+}
+.cur-player-header {
+  text-align: left;
+  padding: 8px;
+  margin-bottom: 8px;
+  width: 200px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  &.black {
+    background-color: black;
+    color: white;
+    border-color: white;
+  }
+}
+
+.draggable {
+  outline: none;
+}
+
+.board-wrapper {
+  margin: 42px;
+  display: flex;
+  flex-direction: column;
+  .end-zone-wrapper {
+    &.black {
+      //margin-right: 18px;
+    }
+    &.white {
+      //margin-left: 18px;
+    }
+  }
+  .game-board-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .board-halves {
+    display: flex;
+    flex-direction: column;
+  }
+  .board-top-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    .dice-section {
+      display: flex;
+      flex-direction: row;
+      .roll-dice-btn {
+        margin-right: 18px;
+      }
+    }
+  }
+
+  .board-half {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    &.top {
+      flex-direction: row;
+      margin-bottom: 90px;
+      .board-position-triangle {
+        transform: rotate(180deg);
+      }
+    }
+    &.bottom {
+      .no-scroll-container {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
+  }
+  .back-btn {
+    width: 75px;
+    transition: all 0.2s;
+    cursor: pointer;
+    padding: 8px;
+    text-align: left;
+    &:hover,
+    &:focus {
+      transform: scale(1.05);
+    }
+  }
+  .game-selection-header {
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+  .avilable-games {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .game-tile-wrapper {
+      margin-right: 8px;
+    }
+  }
+}
+
+button {
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 8px;
+  &:hover,
+  &:focus {
+    box-shadow: $app-hover-box-shadow;
+    transform: scale(1.05);
+  }
+}

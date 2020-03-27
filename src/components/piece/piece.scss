@@ -1,0 +1,15 @@
+.board-piece {
+  transition: 0.25s all;
+  flex-grow: 0;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid grey;
+  cursor: pointer;
+  &.black {
+    background-color: black;
+    border-color: white;
+  }
+}
