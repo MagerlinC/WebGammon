@@ -20,7 +20,9 @@ const BoardHalf = ({ pieces, groupName, top, curPlayer, middleIndex }) => {
               (index % 2 === (top ? 0 : 1) ? " black" : " white")
             }
           >
-            <div className={"board-position-triangle"} />
+            <div className={"board-position-triangle"}>
+              {top ? index : index + middleIndex}
+            </div>
             <Droppable
               placeholderStyle={{ height: "40px", width: "40px" }}
               key={"board-line-" + (top ? index : index + middleIndex)}

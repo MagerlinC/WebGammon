@@ -67,7 +67,7 @@ export const MakeMove = (
       .set(newGameState)
       .then(
         onSuccess
-          ? onSuccess
+          ? () => onSuccess(Math.abs(parseInt(fromPos) - parseInt(toPos)))
           : console.log(
               "Succesfully moved piece from " + fromPos + " to " + toPos
             )

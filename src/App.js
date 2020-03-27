@@ -20,7 +20,6 @@ function App() {
   const player2 = new Player("Mikkel", "white");
 
   const [curPlayer, setCurPlayer] = useState("black");
-  const [curPlayerMoveCount, setCurPlayerMoveCount] = useState(0);
   const [availableGames, setAvailableGames] = useState({});
   const [selectedGame, setSelectedGame] = useState(null);
   const [dieRoll, setDieRoll] = useState([]);
@@ -30,35 +29,24 @@ function App() {
     GetAvailableGames(doc => setAvailableGames(doc));
   }, []);
 
-  useEffect(() => {
-    if (selectedGame != null) {
-      let curPlayer = "black";
-      let curTurnCount = 0;
-      for (let i = 0; i <= selectedGame.moveCount; i++) {
-        if (curTurnCount === 2) {
-          curPlayer = curPlayer === "black" ? "white" : "black";
-          curTurnCount = 1;
-        } else {
-          curTurnCount++;
-        }
-      }
-      setCurPlayer(curPlayer);
-      setCurPlayerMoveCount(curTurnCount);
-    }
-  }, [selectedGame]);
-
   // Hardcoded start of game setup for now
-  const boardHalf = selectedGame ? selectedGame.positions.length / 2 : 0;
+  const boardHalf = 12;
 
   const groupName = "backgammon-board";
 
-  const onMoveSucces = () => {
-    if (curPlayerMoveCount === 0) {
-      setCurPlayerMoveCount(1);
-    } else {
+  const onMoveSucces = distanceMoved => {
+    // Turn will shift when we add 1 after this
+    const turnOver = dieRoll.length === 1;
+    if (turnOver) {
       setCurPlayer(curPlayer === "black" ? "white" : "black");
-      setCurPlayerMoveCount(0);
       setDieRoll([]);
+    } else {
+      // Remove used dice
+      const indexToRemove = dieRoll.findIndex(roll => roll === distanceMoved);
+      console.log("Removing roll at idx " + indexToRemove);
+      const newDieRoll = [...dieRoll];
+      newDieRoll.splice(indexToRemove, 1);
+      setDieRoll(newDieRoll);
     }
   };
 
@@ -108,14 +96,19 @@ function App() {
   };
 
   const rollDie = () => {
-    const dieRoll = () => Math.round(Math.random() * 6);
+    const dieRoll = () => Math.floor(Math.random() * 6) + 1;
     const roll = [dieRoll(), dieRoll()];
+    if (roll[0] === roll[1]) {
+      // Add doubles
+      roll.push(roll[0]);
+      roll.push(roll[0]);
+    }
     setDieRoll(roll);
   };
   // selectedGame.positions.slice(0, boardHalf)
   const topHalfPieces = selectedGame ? selectedGame.positions.slice(0, 12) : [];
   const bottomHalfPieces = selectedGame
-    ? selectedGame.positions.slice(12, 23)
+    ? selectedGame.positions.slice(12, 24)
     : [];
   const whiteZonePieces = selectedGame ? selectedGame.positions[24].pieces : [];
   const blackZonePieces = selectedGame ? selectedGame.positions[25].pieces : [];
@@ -150,9 +143,11 @@ function App() {
               <div className={"cur-player-header " + curPlayer}>
                 Current Player: {curPlayer}
               </div>
-              <div className={"num-moves"}>
-                Move Count: {selectedGame.moveCount}
-              </div>
+              {dieRoll.length > 0 && (
+                <div className={"num-moves"}>
+                  Current Player Moves Left: {dieRoll.length}
+                </div>
+              )}
               <div className={"dice-section"}>
                 <button
                   tabIndex="0"
@@ -164,7 +159,7 @@ function App() {
                 {dieRoll.length > 0 && (
                   <div className={"die-roll-info"}>
                     Die Roll: (
-                    {dieRoll.map((die, idx) => (idx === 0 ? die + ", " : die))})
+                    {dieRoll.map((die, idx) => (idx > 0 ? ", " + die : die))})
                   </div>
                 )}
               </div>
